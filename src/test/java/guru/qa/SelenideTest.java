@@ -17,7 +17,7 @@ public class SelenideTest {
     private static final int ISSUE = 1915;
 
     @Test
-    public void TestIssueSearch() {
+    public void testIssueSearch() {
         SelenideLogger.addListener("allure", new AllureSelenide());
 
 

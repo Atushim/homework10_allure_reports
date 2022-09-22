@@ -12,13 +12,13 @@ import static com.codeborne.selenide.Selenide.open;
 import static io.qameta.allure.Allure.step;
 import static org.openqa.selenium.By.linkText;
 
-public class LambdaTest{
+public class IssueTest {
 
     private static final String REPOSITORY = "selenide/selenide";
     private static final int ISSUE = 1915;
 
     @Test
-    public void TestIssueSearch() {
+    public void testLambdaStep() {
         SelenideLogger.addListener("allure", new AllureSelenide());
 
         step("Открытие главной страницы", () -> {
@@ -26,10 +26,10 @@ public class LambdaTest{
         });
         step("Поиск репозитория " + REPOSITORY, () -> {
             $(".header-search-input").click();
-            $(".header-search-input").setValue("Selenide");
+            $(".header-search-input").setValue(REPOSITORY);
             $(".header-search-input").submit();
         });
-        step("Кликл по ссылке репозитория", () -> {
+        step("Клик по ссылке репозитория", () -> {
             $(linkText(REPOSITORY)).click();
         });
         step("Открытие страницы репозитория", () -> {
@@ -39,6 +39,17 @@ public class LambdaTest{
             $(withText("#" + ISSUE)).should(Condition.exist);
         });
 
+    }
+
+    @Test
+    public void testAnnotatedStep() {
+        WithSteps steps = new WithSteps();
+
+        steps.openMainPage();
+        steps.searchReposiroty(REPOSITORY);
+        steps.clickRepositoryLink(REPOSITORY);
+        steps.openIssueTab();
+        steps.checkIssueNumber(ISSUE);
     }
 
 }
